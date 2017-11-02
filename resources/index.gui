@@ -1,0 +1,8 @@
+<svg>
+     <image id="flameHidden" x="0" y="0" width="348" height="250" href="frames/frame_apngframe2.png"  />
+     <image id="flame" x="0" y="0" width="348" height="250" href="frames/frame_apngframe1.png"  />
+     <text id="time" />
+     <image id="screen" x="0" y="0" width="348" height="250" href="screen.png"  />
+     
+     
+</svg>

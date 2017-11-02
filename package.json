@@ -1,0 +1,10 @@
+{
+  "fitbit": {
+    "appUUID": "0a550067-bf04-44b4-a7d8-644121ce714c",
+    "appType": "clockface",
+    "appDisplayName": "Fireplace",
+    "iconFile": "resources/icon.png",
+    "wipeColor": "",
+    "requestedPermissions": []
+  }
+}
