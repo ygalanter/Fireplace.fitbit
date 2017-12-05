@@ -1,50 +1,53 @@
 // importing libraries
-import clock from "clock";
 import document from "document";
 import {preferences} from "user-settings";
 import dtlib from "../common/datetimelib";
+import {display} from "display";
 
 // getting SVG elements
 let flame = document.getElementById("flame");
 let flameHidden = document.getElementById("flameHidden");
 let time = document.getElementById("time");
+let all = document.getElementById("all");
+
 
 // flame animation
 function animateFlame(delay) {
+  let last_time_update = null;
   let frame = 1;        //starting with frame 1
-  let frameCount = 25;  //total 25 frames
-  let i = setInterval(function(){
-    
+  let frameCount = 12;  //total 12 frames
+  return setInterval(function(){
+   
       // preloading "caching" next frame into hidden IMAGE
       if (frame < frameCount) {
-        flameHidden.href = `frames/frame_apngframe${frame+1}.png`;
+        flameHidden.href = `frames/frame${frame+1}.png`;
       } else {
-        flameHidden.href = `frames/frame_apngframe${1}.png`;
+        flameHidden.href = `frames/frame${1}.png`;
       }
     
       //loading current frame
-      flame.href = `frames/frame_apngframe${frame}.png`;
+      flame.href = `frames/frame${frame}.png`;
     
       //incrementing frame counter
       frame++;
       if (frame > frameCount) {
           frame = 1;
       }
+
+      var now = new Date();
+      if ((last_time_update == null) || (last_time_update.getMinutes() != now.getMinutes()) || (last_time_update.getHours() != now.getHours())) {
+        last_time_update = now;
+        updateClock(now);
+      }
+      
+    
   }, delay)
+  
 }
 
-//kicking of flame animation with 50ms delay between frames
-animateFlame(50);
-
-// get user time format preference
-dtlib.timeFormat = preferences.clockDisplay == "12h" ? 1: 0;
-
-// Update the clock every minute
-clock.granularity = "minutes";
 
 // Update the <text> element with the current time
-function updateClock() {
- let today = new Date();
+function updateClock(today) {
  
   // formatting hours based on user preferences
   let hours = dtlib.format1224hour(today.getHours());
@@ -59,12 +62,6 @@ function updateClock() {
 
   time.text = `${monoDigits(hours)}:${monoDigits(mins)}`;
 }
-
-// Update the clock every tick event
-clock.ontick = () => updateClock();
-
-// Don't start with a blank screen
-updateClock();
 
 
 //creating monospace digits
@@ -87,3 +84,26 @@ function hex2a(hex) {
   }
   return str.toString();
 }
+
+// on display on/off stoping/starting animation/time
+display.onchange = () => {
+  if (display.on) {
+    console.log("display on")
+    interval = animateFlame(50);  //restarting flame animation with 50ms delay between frames
+    setTimeout(function(){all.style.visibility="visible"}, 50); //to avoid skipped frame making displat visible on 50ms delay
+  } else {
+    console.log("display off")
+    all.style.visibility="hidden";
+    clearInterval(interval);
+  }
+}
+
+
+
+// get user time format preference
+dtlib.timeFormat = preferences.clockDisplay == "12h" ? 1: 0;
+
+
+let interval = animateFlame(50); //kicking of flame animation with 50ms delay between frames
+setTimeout(function(){all.style.visibility="visible"}, 50); //to avoid skipped frame making displat visible on 50ms delay
+console.log("kicked interval");

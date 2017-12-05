@@ -5,6 +5,11 @@
     "appDisplayName": "Fireplace",
     "iconFile": "resources/icon.png",
     "wipeColor": "",
-    "requestedPermissions": []
+    "requestedPermissions": [],
+    "i18n": {
+      "en": {
+        "name": "Fireplace"
+      }
+    }
   }
 }
