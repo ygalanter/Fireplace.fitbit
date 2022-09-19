@@ -1,0 +1,23 @@
+<svg viewport-fill="black">
+  
+  <defs>
+    <symbol id="flames" href="#sprite-image" system-events="all" width="100%" height="100%" >
+      <!-- Animate images frame_apngframe_01.png -> frame_apngframe_25.png -->
+      <animate id="sprite-animation" attributeName="value" begin="enable" end="disable" 
+               from="1" to="12" dur="0.7" repeatCount="indefinite"/>
+      <!-- Specifies the image file path and image prefix for widget -->
+      <image href="frames/frame_01.png" /> 
+    </symbol> 
+  </defs>
+  
+  
+
+    
+    <svg width="100%" height="100%">
+      <use id="flame" href="#flames"/>
+    </svg>
+    
+   <text id="time"  />
+    <image id="screen" x="0" y="-5" height="100%+5" href="screen.png" />
+ 
+</svg>
